@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script src="js/xls4IE.js"></script>
+<script type="text/javascript">
+    if(!Common.isIE()){
+        alert("不是IE不能测试")
+    }
+
+    function myRead(){
+        var path = document.getElementById("upload").value
+        var reader = null
+        try{
+            reader = new ExcelReader();
+            reader.openExcel(path);
+            show(reader.getStatus())
+            var list = reader.findAllSheet()
+            for(var i =0;i<list.length;i++){
+                show(i+"," +list[i])
+                show(reader.getStatus())
+            }
+        }catch (e){
+            show(e)
+            reader.close()
+        }
+    }
+
+    function writer(){
+
+    }
+
+    function testData(){
+
+    }
+
+    function show(text){
+        document.getElementById("show").innerText += ('\r\n'+text)
+    }
+
+    function clear(){
+        document.getElementById("show").innerText = "控制台输出"
+    }
+</script>
+<body>
+    <input type="button" onclick="clear()" value="还原控制台">
+    <br>
+    <input type="file" id="upload" /><input type="button" onclick="myRead()" value="执行读取">
+    <br>
+    <textarea id="show" style="width: 1000px;height: 500px">控制台输出</textarea>
+</body>
+</html>
